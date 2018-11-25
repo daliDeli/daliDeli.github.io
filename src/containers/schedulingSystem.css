@@ -1,0 +1,35 @@
+table {
+    width: 90%;
+    margin: 10px;
+}
+th{
+    padding: 5px;
+    width: 12%;
+}
+td{
+    padding: 4px;
+    border: 1px solid black;
+    height: 100px;
+}
+.date{
+    font-weight: 600;
+    background: rgb(231, 63, 48);
+}
+.today{
+    font-weight: 900;
+    background: rgb(160, 24, 11);
+    color: white;
+}
+img{
+    height: 200px;
+    width: 180px;
+}
+.green{
+    background: rgb(62, 200, 62);
+}
+.blue{
+    background: rgb(0, 124, 128);
+}
+.orange{
+    background: rgb(231, 150, 43);
+}
