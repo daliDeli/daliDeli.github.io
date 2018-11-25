@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { getEmployeesShifts, getEmployeesInfo } from '../services/apiService';
-import { todaysDate, employeeShifts } from '../utils/helper';
+import { todaysDate, employeeShifts, getAllDaysOfWeek } from '../utils/helper';
 import WorkingWeek from '../components/WorkingWeek';
 import './schedulingSystem.css';
 
@@ -38,7 +38,18 @@ export default class SchedulingSystem extends Component {
   }
 
   componentDidMount() {
+    // const { match } = this.props;
+    // console.warn(match.url);
     this.updateState();
+    this.updateDaysOfWeek();
+  }
+
+  componentDidUpdate({ match: oldMatch }) {
+    const { match: currentMatch } = this.props;
+    if (oldMatch.params.redirect !== currentMatch.params.redirect) {
+      this.updateDaysOfWeek(currentMatch.params.redirect);
+      console.warn('radi');
+    }
   }
 
   filterEmployeesShifts = e => {
@@ -53,19 +64,22 @@ export default class SchedulingSystem extends Component {
     }
   };
 
-  updateState = () => {
+  updateDaysOfWeek(whichWeek) {
+    const daysOfWeek = getAllDaysOfWeek(whichWeek);
+    this.setState({ daysOfWeek });
+  }
+
+  updateState() {
     getEmployeesShifts().then(({ data }) => this.setState({ shifts: data }));
     getEmployeesInfo().then(({ data }) => {
       this.setState({ employees: data, filteredEmployees: data });
     });
-  };
+  }
 
   render() {
     const { employees, filteredEmployees, shifts, daysOfWeek } = this.state;
-    console.warn(employees, shifts);
     return (
-      <div>
-        <h1>Dunder Mifflin </h1>
+      <main>
         <table>
           <thead>
             <tr>
@@ -96,7 +110,7 @@ export default class SchedulingSystem extends Component {
             ))}
           </tbody>
         </table>
-      </div>
+      </main>
     );
   }
 }
