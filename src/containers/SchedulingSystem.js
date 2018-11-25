@@ -16,6 +16,7 @@ export default class SchedulingSystem extends Component {
           position: 'bartender',
         },
       ],
+      filteredEmployees: [],
       shifts: [
         {
           name: 'Day',
@@ -40,36 +41,59 @@ export default class SchedulingSystem extends Component {
     this.changeState();
   }
 
+  filterEmployeesShifts = e => {
+    const { employees } = this.state;
+    const shiftsFrom = e.target.value;
+
+    if (shiftsFrom === 'All Employees') {
+      this.setState({ filteredEmployees: employees });
+    } else {
+      const filteredEmployees = employees.filter(employee => employee.firstName === e.target.value);
+      this.setState({ filteredEmployees });
+    }
+  };
+
   changeState = () => {
     const { employeeData, shiftData } = getEmployeesData();
-    this.setState({ employees: employeeData, shifts: shiftData });
+    this.setState({ employees: employeeData, filteredEmployees: employeeData, shifts: shiftData });
   };
 
   render() {
-    const { employees, shifts, daysOfWeek } = this.state;
+    const { employees, filteredEmployees, shifts, daysOfWeek } = this.state;
     return (
-      <table>
-        <thead>
-          <tr>
-            <th>EMPLOYEE</th>
-            {daysOfWeek.map((day, i) => (
-              <th className={day === todaysDate() ? 'today' : 'date'} id={i}>
-                {day}
+      <div>
+        <h1>Dunder Mifflin </h1>
+        <table>
+          <thead>
+            <tr>
+              <th>
+                EMPLOYEE
+                <select onClick={this.filterEmployeesShifts}>
+                  <option>All Employees</option>
+                  {employees.map(employee => (
+                    <option>{employee.firstName}</option>
+                  ))}
+                </select>
               </th>
+              {daysOfWeek.map((day, i) => (
+                <th className={day === todaysDate() ? 'today' : 'date'} id={i}>
+                  {day}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {filteredEmployees.map((employee, i) => (
+              <WorkingWeek
+                employee={employee}
+                shifts={employeeShifts(shifts, employee.firstName)}
+                workingDays={daysOfWeek}
+                key={i}
+              />
             ))}
-          </tr>
-        </thead>
-        <tbody>
-          {employees.map((employee, i) => (
-            <WorkingWeek
-              employee={employee}
-              shifts={employeeShifts(shifts, employee.firstName)}
-              workingDays={daysOfWeek}
-              key={i}
-            />
-          ))}
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     );
   }
 }
