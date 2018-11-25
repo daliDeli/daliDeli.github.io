@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import getEmployeesData from '../services/apiService';
+import { getEmployeesShifts, getEmployeesInfo } from '../services/apiService';
 import { todaysDate, employeeShifts } from '../utils/helper';
 import WorkingWeek from '../components/WorkingWeek';
 import './schedulingSystem.css';
@@ -38,7 +38,7 @@ export default class SchedulingSystem extends Component {
   }
 
   componentDidMount() {
-    this.changeState();
+    this.updateState();
   }
 
   filterEmployeesShifts = e => {
@@ -53,13 +53,16 @@ export default class SchedulingSystem extends Component {
     }
   };
 
-  changeState = () => {
-    const { employeeData, shiftData } = getEmployeesData();
-    this.setState({ employees: employeeData, filteredEmployees: employeeData, shifts: shiftData });
+  updateState = () => {
+    getEmployeesShifts().then(({ data }) => this.setState({ shifts: data }));
+    getEmployeesInfo().then(({ data }) => {
+      this.setState({ employees: data, filteredEmployees: data });
+    });
   };
 
   render() {
     const { employees, filteredEmployees, shifts, daysOfWeek } = this.state;
+    console.warn(employees, shifts);
     return (
       <div>
         <h1>Dunder Mifflin </h1>

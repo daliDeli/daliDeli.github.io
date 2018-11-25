@@ -7,13 +7,15 @@
   "author": "Dalibor Delipara",
   "license": "ISC",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "json:server": "json-server --watch src/database/shifts-employees.json",
     "start": "webpack-dev-server --mode development --config config/webpack.base.config.js --open --hot --history-api-fallback --env.PLATFORM=local --env.VERSION=stag",
     "lint": "eslint --debug src/",
     "lint:write": "eslint --debug src/ --fix",
     "prettier": "prettier --write src/**/*.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "json-server": "^0.14.0",
     "prop-types": "^15.6.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2"

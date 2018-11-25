@@ -1,6 +1,9 @@
-import employeeData from '../employeeData';
-import shiftData from '../shiftData';
+import axios from 'axios';
 
-export default () => {
-  return { employeeData, shiftData };
+export const getEmployeesInfo = () => {
+  return axios.get('http://localhost:3000/employees');
+};
+
+export const getEmployeesShifts = () => {
+  return axios.get('http://localhost:3000/shifts');
 };
