@@ -1,16 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { employeesShiftData } from '../utils/helper';
-import Employee from '../components/Employee';
+import Employee from './Employee';
 
-export default ({ employee, shifts, workingDays }) => {
+export default function WorkingWeek({ employee, shifts, workingDays }) {
   if (shifts.length > 0) {
     return (
       <tr>
-        <td>
-          <img src={employee.avatar} alt={employee.firstName} />
-          <p>{`${employee.firstName} ${employee.lastName}`}</p>
-          <p>{employee.position}</p>
-        </td>
+        <Employee employee={employee} />
         {workingDays.map(day => {
           const { workingHours, color } = employeesShiftData(shifts, day);
           return <td className={color}>{workingHours}</td>;
@@ -24,4 +21,10 @@ export default ({ employee, shifts, workingDays }) => {
       <td colSpan="7">This Week is Free</td>
     </tr>
   );
+}
+
+WorkingWeek.propTypes = {
+  employee: PropTypes.object.isRequired,
+  shifts: PropTypes.array.isRequired,
+  workingDays: PropTypes.array.isRequired,
 };

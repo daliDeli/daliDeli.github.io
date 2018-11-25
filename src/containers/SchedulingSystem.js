@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import getEmployeesData from '../services/apiService';
 import { todaysDate, employeeShifts } from '../utils/helper';
-import WorkingWeek from './WorkingWeek';
+import WorkingWeek from '../components/WorkingWeek';
 import './schedulingSystem.css';
 
 export default class SchedulingSystem extends Component {

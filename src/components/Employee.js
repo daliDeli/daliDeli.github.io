@@ -1,10 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default props => {
+export default function Employee({ employee }) {
   return (
-    <div>
-      <h3>{props.employeeName}</h3>
-      <img src={props.avatar} alt="Employee" />
-    </div>
+    <td>
+      <img src={employee.avatar} alt={employee.firstName} />
+      <p>{`${employee.firstName} ${employee.lastName}`}</p>
+      <p>{employee.position}</p>
+    </td>
   );
+}
+
+Employee.propTypes = {
+  employee: PropTypes.object.isRequired,
 };
