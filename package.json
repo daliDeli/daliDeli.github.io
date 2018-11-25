@@ -7,7 +7,7 @@
   "author": "Dalibor Delipara",
   "license": "ISC",
   "scripts": {
-    "json:server": "json-server --watch src/database/shifts-employees.json",
+    "json:server": "json-server --watch src/database/database.json",
     "start": "webpack-dev-server --mode development --config config/webpack.base.config.js --open --hot --history-api-fallback --env.PLATFORM=local --env.VERSION=stag",
     "lint": "eslint --debug src/",
     "lint:write": "eslint --debug src/ --fix",

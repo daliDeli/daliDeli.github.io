@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { getEmployeesShifts, getEmployeesInfo } from '../services/apiService';
-import { todaysDate, employeeShifts, getAllDaysOfWeek } from '../utils/helper';
-import WorkingWeek from '../components/WorkingWeek';
-import './schedulingSystem.css';
+import { getEmployeesShifts, getEmployeesInfo } from '../../services/api';
+import { todaysDate, employeeShifts, getAllDaysOfWeek } from '../../utils/helper';
+import WorkingWeek from '../../components/WorkingWeek';
+import './index.css';
 
 export default class SchedulingSystem extends Component {
   constructor() {
@@ -38,8 +38,6 @@ export default class SchedulingSystem extends Component {
   }
 
   componentDidMount() {
-    // const { match } = this.props;
-    // console.warn(match.url);
     this.updateState();
     this.updateDaysOfWeek();
   }

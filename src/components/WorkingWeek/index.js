@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { employeesShiftData } from '../utils/helper';
-import Employee from './Employee';
+import { employeesShiftData } from '../../utils/helper';
+import Employee from '../Employee';
 
 export default function WorkingWeek({ employee, shifts, workingDays }) {
   if (shifts.length > 0) {

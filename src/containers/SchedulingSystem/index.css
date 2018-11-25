@@ -39,29 +39,3 @@ img{
 .orange{
     background: rgb(231, 150, 43);
 }
-/* header */
-h1{
-    font-size: 5em;
-}
-#logo{
-    width: 18%;
-}
-nav a{
-    font-size: 1.7em;
-    padding: 10px;
-    color: black;
-}
-.active{
-    color: rgb(47, 16, 88);
-}
-/* welcome page */
-#welcome-img{
-    height: 60%;
-    width: 50%;
-    display: block;
-    margin: 0 auto;
-}
-#welcome-link{
-    font-size: 6em;
-    color: black;
-}

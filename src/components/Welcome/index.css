@@ -1,0 +1,10 @@
+#welcome-img{
+  height: 60%;
+  width: 50%;
+  display: block;
+  margin: 0 auto;
+}
+#welcome-link{
+  font-size: 6em;
+  color: black;
+}
