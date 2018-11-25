@@ -1,15 +1,25 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export default function() {
   return (
     <header>
-      <h1>Dunder Mifflin </h1>
-      <div id="navigation">
-        <Link to="/last">Last week</Link>
-        <Link to="/current">Current week</Link>
-        <Link to="/next">Next week</Link>
-      </div>
+      <img
+        src="https://www.logolynx.com/images/logolynx/46/465010f3ad5e715b06b0aac94d14d09f.png"
+        alt="Dunder Mifflin logo"
+        id="logo"
+      />
+      <nav>
+        <NavLink to="/last" activeClassName="active">
+          Last week
+        </NavLink>
+        <NavLink to="/current" activeClassName="active">
+          Current week
+        </NavLink>
+        <NavLink to="/next" activeClassName="active">
+          Next week
+        </NavLink>
+      </nav>
     </header>
   );
 }

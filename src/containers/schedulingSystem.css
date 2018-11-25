@@ -5,11 +5,16 @@ table {
 th{
     padding: 5px;
     width: 12%;
+    height: 40px;
 }
 td{
     padding: 4px;
     border: 1px solid black;
     height: 100px;
+}
+select{
+    display: block;
+    width: 100%;
 }
 .date{
     font-weight: 600;
@@ -33,6 +38,21 @@ img{
 .orange{
     background: rgb(231, 150, 43);
 }
+/* header */
+h1{
+    font-size: 5em;
+}
+#logo{
+    width: 18%;
+}
+nav a{
+    font-size: 1.7em;
+    padding: 10px;
+    color: black;
+}
+.active{
+    color: rgb(47, 16, 88);
+}
 /* welcome page */
 #welcome-img{
     height: 60%;
@@ -42,4 +62,5 @@ img{
 }
 #welcome-link{
     font-size: 6em;
+    color: black;
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export default function() {
   return (
@@ -9,9 +9,9 @@ export default function() {
         alt="Dunder Mifflin"
         id="welcome-img"
       />
-      <Link to="/current" id="welcome-link">
+      <NavLink to="/current" id="welcome-link">
         Enter
-      </Link>
+      </NavLink>
     </main>
   );
 }
