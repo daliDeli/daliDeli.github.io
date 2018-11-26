@@ -13,11 +13,14 @@ export const employeesShiftData = (shifts, day) => {
   if (shiftData) {
     return { workingHours: shiftData.name, color: shiftData.position.color };
   }
-  return { workingHours: 'No Shift', color: 'yellow' };
+  return { workingHours: 'No Shift', color: 'white' };
+};
+
+export const addTimestamp = data => {
+  return data.map((obj, i) => ({ ...obj, id: i + new Date().getTime() }));
 };
 
 export const getAllDaysOfWeek = whichWeek => {
-  console.warn(whichWeek);
   switch (whichWeek) {
     case 'last':
       return [

@@ -26,16 +26,3 @@ select{
     background: rgb(160, 24, 11);
     color: white;
 }
-img{
-    height: 200px;
-    width: 180px;
-}
-.green{
-    background: rgb(62, 200, 62);
-}
-.blue{
-    background: rgb(0, 124, 128);
-}
-.orange{
-    background: rgb(231, 150, 43);
-}

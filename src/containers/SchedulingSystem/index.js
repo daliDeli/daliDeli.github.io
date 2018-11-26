@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import ReactLoading from 'react-loading';
 import { getEmployeesShifts, getEmployeesInfo } from '../../services/api';
-import { todaysDate, employeeShifts, getAllDaysOfWeek } from '../../utils/helper';
+import { todaysDate, employeeShifts, getAllDaysOfWeek, addTimestamp } from '../../utils/helper';
 import WorkingWeek from '../../components/WorkingWeek';
 import './index.css';
 
@@ -8,37 +10,16 @@ export default class SchedulingSystem extends Component {
   constructor() {
     super();
     this.state = {
-      employees: [
-        {
-          firstName: 'Miroslav',
-          lastName: 'Delipara',
-          avatar: 'https://image.flaticon.com/icons/png/128/236/236831.png',
-          position: 'bartender',
-        },
-      ],
+      employees: [],
       filteredEmployees: [],
-      shifts: [
-        {
-          name: 'Day',
-          date: '11/29/2018',
-          position: 'Bartender',
-          employees: ['Nko', 'Niko'],
-        },
-      ],
-      daysOfWeek: [
-        'Mon, Nov 26',
-        'Tue, Nov 27',
-        'Wed, Nov 28',
-        'Thu, Nov 29',
-        'Fri, Nov 30',
-        'Sat, Dec 1',
-        'Sat, Dec 2',
-      ],
+      shifts: [],
+      daysOfWeek: [],
+      isLoading: true,
     };
   }
 
   componentDidMount() {
-    this.updateState();
+    this.updateShiftsAndEmployees();
     this.updateDaysOfWeek();
   }
 
@@ -46,15 +27,14 @@ export default class SchedulingSystem extends Component {
     const { match: currentMatch } = this.props;
     if (oldMatch.params.redirect !== currentMatch.params.redirect) {
       this.updateDaysOfWeek(currentMatch.params.redirect);
-      console.warn('radi');
     }
   }
 
   filterEmployeesShifts = e => {
     const { employees } = this.state;
-    const shiftsFrom = e.target.value;
+    const employeesName = e.target.value;
 
-    if (shiftsFrom === 'All Employees') {
+    if (employeesName === 'All Employees') {
       this.setState({ filteredEmployees: employees });
     } else {
       const filteredEmployees = employees.filter(employee => employee.firstName === e.target.value);
@@ -64,19 +44,24 @@ export default class SchedulingSystem extends Component {
 
   updateDaysOfWeek(whichWeek) {
     const daysOfWeek = getAllDaysOfWeek(whichWeek);
-    this.setState({ daysOfWeek });
+    this.setState({ daysOfWeek, isLoading: false });
   }
 
-  updateState() {
-    getEmployeesShifts().then(({ data }) => this.setState({ shifts: data }));
-    getEmployeesInfo().then(({ data }) => {
-      this.setState({ employees: data, filteredEmployees: data });
-    });
+  updateShiftsAndEmployees() {
+    getEmployeesShifts().then(({ data }) => this.setState({ shifts: data, isLoading: false }));
+    getEmployeesInfo()
+      .then(({ data }) => addTimestamp(data))
+      .then(data => {
+        this.setState({ employees: data, filteredEmployees: data, isLoading: false });
+      });
   }
 
   render() {
-    const { employees, filteredEmployees, shifts, daysOfWeek } = this.state;
-    return (
+    const { employees, filteredEmployees, shifts, daysOfWeek, isLoading } = this.state;
+
+    return isLoading ? (
+      <ReactLoading height={667} width={375} />
+    ) : (
       <main>
         <table>
           <thead>
@@ -86,24 +71,24 @@ export default class SchedulingSystem extends Component {
                 <select onClick={this.filterEmployeesShifts}>
                   <option>All Employees</option>
                   {employees.map(employee => (
-                    <option>{employee.firstName}</option>
+                    <option key={employee.id}>{employee.firstName}</option>
                   ))}
                 </select>
               </th>
-              {daysOfWeek.map((day, i) => (
-                <th className={day === todaysDate() ? 'today' : 'date'} id={i}>
+              {daysOfWeek.map(day => (
+                <th className={day === todaysDate() ? 'today' : 'date'} key={day}>
                   {day}
                 </th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {filteredEmployees.map((employee, i) => (
+            {filteredEmployees.map(employee => (
               <WorkingWeek
                 employee={employee}
                 shifts={employeeShifts(shifts, employee.firstName)}
                 workingDays={daysOfWeek}
-                key={i}
+                key={employee.id}
               />
             ))}
           </tbody>
@@ -112,3 +97,7 @@ export default class SchedulingSystem extends Component {
     );
   }
 }
+
+SchedulingSystem.propTypes = {
+  match: PropTypes.object.isRequired,
+};

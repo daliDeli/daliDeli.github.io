@@ -2,23 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { employeesShiftData } from '../../utils/helper';
 import Employee from '../Employee';
+import './index.css';
 
 export default function WorkingWeek({ employee, shifts, workingDays }) {
-  if (shifts.length > 0) {
-    return (
-      <tr>
-        <Employee employee={employee} />
-        {workingDays.map(day => {
-          const { workingHours, color } = employeesShiftData(shifts, day);
-          return <td className={color}>{workingHours}</td>;
-        })}
-      </tr>
-    );
-  }
   return (
     <tr>
-      <td>{employee.firstName}</td>
-      <td colSpan="7">This Week is Free</td>
+      <Employee employee={employee} />
+      {workingDays.map(day => {
+        const { workingHours, color } = employeesShiftData(shifts, day);
+        return (
+          <td key={day} className={color}>
+            {workingHours}
+          </td>
+        );
+      })}
     </tr>
   );
 }
